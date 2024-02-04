@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {getDetails} from '../../api/api';
 import {RouteProp, ParamListBase} from '@react-navigation/native';
 import {CharacterScreenProps} from '../../types/navigation';
+import {getDetails} from '../../api/api';
 import {FanDetails} from '../../types/types';
 
 type Props = {

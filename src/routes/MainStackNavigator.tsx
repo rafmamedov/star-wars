@@ -1,9 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {ChevronIcon} from '../icons/Chevron';
-import CharacterScreen from '../screens/CharacterScreen/CharacterScreen';
+import {ChevronIcon} from '../icons/ChevronIcon';
 import MainScreen from '../screens/MainScreen/MainScreen';
+import CharacterScreen from '../screens/CharacterScreen/CharacterScreen';
+import {CharacterScreenProps} from '../types/navigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,7 +21,7 @@ const MainStackNavigator = () => {
         name="CharacterScreen"
         component={CharacterScreen}
         options={({navigation, route}) => ({
-          headerTitle: route?.params?.name,
+          headerTitle: (route.params as CharacterScreenProps).name,
           headerLeft: () => (
             <TouchableOpacity
               style={styles.headerLeftWrapper}

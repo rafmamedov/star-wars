@@ -10,13 +10,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+
 import {SearchIcon} from '../../../icons/SearchIcon';
 import {AnimatedIcon} from '../../../components/AnimatedIcon';
-import {ChevronIcon} from '../../../icons/Chevron';
+import {ChevronIcon} from '../../../icons/ChevronIcon';
 import {FilledHeartIcon} from '../../../icons/FilledHeartIcon';
 import {HeartIcon} from '../../../icons/HeartIcon';
 import {Fan, paginationOrder} from '../../../types/types';
-import {useNavigation} from '@react-navigation/native';
 
 type Props = {
   fans: Fan[];

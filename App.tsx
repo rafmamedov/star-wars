@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import MainStackNavigator from './src/routes/MainStackNavigator';
 import {RootStackParamList} from './src/types/navigation';
+import MainStackNavigator from './src/routes/MainStackNavigator';
 
 declare global {
   namespace ReactNavigation {
