@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:starWarsFavorites.xcodeproj">
+      location = "group:/Users/rafmamedov/Documents/projects/starWarsFavorites/ios/starWarsFavourites.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
