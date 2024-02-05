@@ -17,26 +17,26 @@ import {AnimatedIcon} from '../../../components/AnimatedIcon';
 import {ChevronIcon} from '../../../icons/ChevronIcon';
 import {FilledHeartIcon} from '../../../icons/FilledHeartIcon';
 import {HeartIcon} from '../../../icons/HeartIcon';
-import {Fan, paginationOrder} from '../../../types/types';
+import {Character, paginationOrder} from '../../../types/types';
 
 type Props = {
-  fans: Fan[];
   loading: boolean;
   totalCount: number;
   currentPage: number;
-  handleAddFans: (fan: Fan) => void;
-  checkIsAdded: (fan: Fan) => boolean;
+  characters: Character[];
   onPaginate: (order: paginationOrder) => void;
+  checkIsAdded: (character: Character) => boolean;
+  handleAddCharacter: (character: Character) => void;
 };
 
 export const ListSection: React.FC<Props> = ({
-  fans,
   loading,
+  characters,
   totalCount,
-  currentPage,
-  handleAddFans,
-  checkIsAdded,
   onPaginate,
+  currentPage,
+  checkIsAdded,
+  handleAddCharacter,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState(0);
@@ -47,17 +47,17 @@ export const ListSection: React.FC<Props> = ({
 
   const filteredList = useMemo(
     () =>
-      fans.filter(fan =>
-        fan.name.toLowerCase().includes(searchQuery.toLowerCase()),
+      characters.filter(character =>
+        character.name.toLowerCase().includes(searchQuery.toLowerCase()),
       ),
-    [searchQuery, fans],
+    [searchQuery, characters],
   );
 
   const sortedList = useMemo(() => {
-    let sortedFans = [...filteredList];
+    let sortedCharacters = [...filteredList];
 
     if (sortOrder === 0) {
-      sortedFans.sort((a, b) => {
+      sortedCharacters.sort((a, b) => {
         const nameA = a.name.toLowerCase();
         const nameB = b.name.toLowerCase();
         if (nameA < nameB) {
@@ -71,7 +71,7 @@ export const ListSection: React.FC<Props> = ({
     }
 
     if (sortOrder === 1) {
-      sortedFans.sort((a, b) => {
+      sortedCharacters.sort((a, b) => {
         const nameA = a.name.toLowerCase();
         const nameB = b.name.toLowerCase();
         if (nameA > nameB) {
@@ -84,7 +84,7 @@ export const ListSection: React.FC<Props> = ({
       });
     }
 
-    return sortedFans;
+    return sortedCharacters;
   }, [filteredList, sortOrder]);
 
   const onNavigate = (url: string, name: string) => {
@@ -155,11 +155,11 @@ export const ListSection: React.FC<Props> = ({
     </View>
   );
 
-  const renderItem: ListRenderItem<Fan> = ({item}) => (
+  const renderItem: ListRenderItem<Character> = ({item}) => (
     <Pressable onPress={() => onNavigate(item.url, item.name)}>
       <View style={styles.row}>
         <View style={[styles.cell, styles.buttonCell]}>
-          <TouchableOpacity onPress={() => handleAddFans(item)}>
+          <TouchableOpacity onPress={() => handleAddCharacter(item)}>
             {checkIsAdded(item) ? (
               <FilledHeartIcon fill="red" size={20} />
             ) : (

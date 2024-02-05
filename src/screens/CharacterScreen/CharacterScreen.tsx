@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {RouteProp, ParamListBase} from '@react-navigation/native';
 import {CharacterScreenProps} from '../../types/navigation';
 import {getDetails} from '../../api/api';
-import {FanDetails} from '../../types/types';
+import {CharacterDetails} from '../../types/types';
 
 type Props = {
   route: RouteProp<ParamListBase, 'CharacterScreen'>;
@@ -11,7 +11,7 @@ type Props = {
 
 const CharacterScreen: React.FC<Props> = ({route}) => {
   const url = (route.params as CharacterScreenProps).url;
-  const [character, setCharacter] = useState<FanDetails | null>(null);
+  const [character, setCharacter] = useState<CharacterDetails | null>(null);
   const [loading, setLoading] = useState(false);
 
   const getDetailsFromServer = async () => {

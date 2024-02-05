@@ -1,4 +1,4 @@
-export interface FanDetails {
+export interface CharacterDetails {
   name: string;
   height: number;
   mass: number;
@@ -10,7 +10,7 @@ export interface FanDetails {
   homeworld: string;
 }
 
-export interface Fan extends FanDetails {
+export interface Character extends CharacterDetails {
   films: string[];
   species: string[];
   vehicles: string[];
@@ -21,9 +21,9 @@ export interface Fan extends FanDetails {
 }
 
 export interface Counter {
-  female: Fan[];
-  male: Fan[];
-  others: Fan[];
+  female: Character[];
+  male: Character[];
+  others: Character[];
 }
 
 export type paginationOrder = 'previous' | 'next';

@@ -3,19 +3,19 @@ import {StatusBar, StyleSheet, View, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {getFans, getDetails} from '../../api/api';
-import {Fan, paginationOrder} from '../../types/types';
+import {Character, paginationOrder} from '../../types/types';
 import {CounterSection} from './components/CounterSection';
 import {ListSection} from './components/ListSection';
 
 const MainScreen = () => {
-  const [fans, setFans] = useState<Fan[]>([]);
+  const [characters, setCharacters] = useState<Character[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [maleCounter, setMaleCounter] = useState<Fan[]>([]);
-  const [femaleCounter, setFemaleCounter] = useState<Fan[]>([]);
-  const [othersCounter, setOthersCounter] = useState<Fan[]>([]);
+  const [maleCounter, setMaleCounter] = useState<Character[]>([]);
+  const [femaleCounter, setFemaleCounter] = useState<Character[]>([]);
+  const [othersCounter, setOthersCounter] = useState<Character[]>([]);
 
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
@@ -29,7 +29,7 @@ const MainScreen = () => {
     setOthersCounter([]);
   };
 
-  const handleAddFans = (fan: Fan) => {
+  const handleAddCharacter = (fan: Character) => {
     switch (fan.gender) {
       case 'male':
         if (maleCounter.some(male => male.name === fan.name)) {
@@ -63,7 +63,7 @@ const MainScreen = () => {
     }
   };
 
-  const checkIsAdded = (fan: Fan) => {
+  const checkIsAdded = (fan: Character) => {
     if (fan.gender === 'female') {
       return femaleCounter.some(female => female.name === fan.name);
     }
@@ -75,35 +75,37 @@ const MainScreen = () => {
     return othersCounter.some(they => they.name === fan.name);
   };
 
-  const getFansFromServer = async (page: number) => {
+  const getCharactersFromServer = async (page: number) => {
     setLoading(true);
     try {
-      const fetchedFans = await getFans(page);
-      setTotalCount(fetchedFans.count);
-      setTotalPages(Math.ceil(fetchedFans.count / 10));
+      const fetchedCharacters = await getFans(page);
+      setTotalCount(fetchedCharacters.count);
+      setTotalPages(Math.ceil(fetchedCharacters.count / 10));
 
-      const fanPromises = fetchedFans.results.map(async (fan: Fan) => {
-        try {
-          const homePlanet = await getDetails(fan.homeworld);
-          const fetchedSpecies =
-            fan.species.length > 0
-              ? await getDetails(fan.species[0])
-              : {name: ''};
+      const charactersPromises = fetchedCharacters.results.map(
+        async (character: Character) => {
+          try {
+            const homePlanet = await getDetails(character.homeworld);
+            const fetchedSpecies =
+              character.species.length > 0
+                ? await getDetails(character.species[0])
+                : {name: ''};
 
-          return {
-            ...fan,
-            species: fetchedSpecies?.name,
-            homeworld: homePlanet.name,
-          };
-        } catch (error) {
-          console.error('Error fetching homeworld details:', error);
-          return fan;
-        }
-      });
+            return {
+              ...character,
+              species: fetchedSpecies?.name,
+              homeworld: homePlanet.name,
+            };
+          } catch (error) {
+            console.error('Error fetching homeworld details:', error);
+            return character;
+          }
+        },
+      );
 
-      const formattedFansData = await Promise.all(fanPromises);
+      const formattedCharactersData = await Promise.all(charactersPromises);
 
-      setFans(formattedFansData);
+      setCharacters(formattedCharactersData);
     } catch (error) {
       console.error('Error fetching fans:', error);
     } finally {
@@ -116,14 +118,14 @@ const MainScreen = () => {
       case 'next':
         if (currentPage < totalPages) {
           setCurrentPage(current => current + 1);
-          getFansFromServer(currentPage + 1);
+          getCharactersFromServer(currentPage + 1);
         }
         break;
 
       case 'previous':
         if (currentPage > 1) {
           setCurrentPage(current => current - 1);
-          getFansFromServer(currentPage - 1);
+          getCharactersFromServer(currentPage - 1);
         }
         break;
 
@@ -133,7 +135,7 @@ const MainScreen = () => {
   };
 
   useEffect(() => {
-    getFansFromServer(1);
+    getCharactersFromServer(1);
   }, []);
 
   return (
@@ -151,13 +153,13 @@ const MainScreen = () => {
         />
 
         <ListSection
-          fans={fans}
           loading={loading}
+          characters={characters}
           onPaginate={onPaginate}
           totalCount={totalCount}
           currentPage={currentPage}
           checkIsAdded={checkIsAdded}
-          handleAddFans={handleAddFans}
+          handleAddCharacter={handleAddCharacter}
         />
       </View>
     </SafeAreaView>
