@@ -11,6 +11,9 @@ The Star Wars Favorites Mobile Application is a React Native CLI-based project f
 - Displays the total amounts of male, female, and other characters based on the user's selection.
 - Provides a "Reset" button to flush all previously added favorites and reset all total values to zero.
 
+## Demo
+The demo (screen video record) is available on YouTube [via the link](https://youtu.be/AfvoqBAqRJE)
+
 # Getting Started
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions, before proceeding.
