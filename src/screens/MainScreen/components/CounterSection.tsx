@@ -1,12 +1,12 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {Fan} from '../../../types/types';
+import {Character} from '../../../types/types';
 
 type Props = {
   clearCounter: () => void;
-  femaleCounter: Fan[];
-  maleCounter: Fan[];
-  othersCounter: Fan[];
+  femaleCounter: Character[];
+  maleCounter: Character[];
+  othersCounter: Character[];
 };
 
 export const CounterSection: React.FC<Props> = ({

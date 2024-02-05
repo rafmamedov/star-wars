@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {StatusBar, StyleSheet, View, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {getFans, getDetails} from '../../api/api';
+import {getDetails, getCharacters} from '../../api/api';
 import {Character, paginationOrder} from '../../types/types';
 import {CounterSection} from './components/CounterSection';
 import {ListSection} from './components/ListSection';
@@ -29,56 +29,56 @@ const MainScreen = () => {
     setOthersCounter([]);
   };
 
-  const handleAddCharacter = (fan: Character) => {
-    switch (fan.gender) {
+  const handleAddCharacter = (character: Character) => {
+    switch (character.gender) {
       case 'male':
-        if (maleCounter.some(male => male.name === fan.name)) {
+        if (maleCounter.some(male => male.name === character.name)) {
           setMaleCounter(current =>
-            current.filter(male => male.name !== fan.name),
+            current.filter(male => male.name !== character.name),
           );
         } else {
-          setMaleCounter(current => [...current, fan]);
+          setMaleCounter(current => [...current, character]);
         }
         break;
 
       case 'female':
-        if (femaleCounter.some(female => female.name === fan.name)) {
+        if (femaleCounter.some(female => female.name === character.name)) {
           setFemaleCounter(current =>
-            current.filter(female => female.name !== fan.name),
+            current.filter(female => female.name !== character.name),
           );
         } else {
-          setFemaleCounter(current => [...current, fan]);
+          setFemaleCounter(current => [...current, character]);
         }
         break;
 
       default:
-        if (othersCounter.some(they => they.name === fan.name)) {
+        if (othersCounter.some(they => they.name === character.name)) {
           setOthersCounter(current =>
-            current.filter(they => they.name !== fan.name),
+            current.filter(they => they.name !== character.name),
           );
         } else {
-          setOthersCounter(current => [...current, fan]);
+          setOthersCounter(current => [...current, character]);
         }
         break;
     }
   };
 
-  const checkIsAdded = (fan: Character) => {
-    if (fan.gender === 'female') {
-      return femaleCounter.some(female => female.name === fan.name);
+  const checkIsAdded = (character: Character) => {
+    if (character.gender === 'female') {
+      return femaleCounter.some(female => female.name === character.name);
     }
 
-    if (fan.gender === 'male') {
-      return maleCounter.some(male => male.name === fan.name);
+    if (character.gender === 'male') {
+      return maleCounter.some(male => male.name === character.name);
     }
 
-    return othersCounter.some(they => they.name === fan.name);
+    return othersCounter.some(they => they.name === character.name);
   };
 
   const getCharactersFromServer = async (page: number) => {
     setLoading(true);
     try {
-      const fetchedCharacters = await getFans(page);
+      const fetchedCharacters = await getCharacters(page);
       setTotalCount(fetchedCharacters.count);
       setTotalPages(Math.ceil(fetchedCharacters.count / 10));
 
