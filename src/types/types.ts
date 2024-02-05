@@ -20,10 +20,4 @@ export interface Character extends CharacterDetails {
   url: string;
 }
 
-export interface Counter {
-  female: Character[];
-  male: Character[];
-  others: Character[];
-}
-
 export type paginationOrder = 'previous' | 'next';
